@@ -12,8 +12,8 @@ var cardStorage = [];
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    fakeWelcome()
-    if (localStorage.getItem('storedCard') != null) {
+
+    if (localStorage.getItem('storedCard')) {
         cardStorage = JSON.parse(localStorage.getItem('storedCard'))
         cardStorage.forEach(addCard)
     }
