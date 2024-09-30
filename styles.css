@@ -5,7 +5,7 @@
     font-family: "Poppins", sans-serif;
     scroll-snap-type: mandatory;
 }
-#home .container, #cards .container-fluid, #about .container {
+#home .container, #cards .container-fluid, #about .container, #play_cards .container  {
     min-height: 100svh;
     scroll-snap-align: start;
 }
@@ -18,7 +18,7 @@
     min-width: 350px;
     max-width: 750px;
 }
-#card_maker, .flashcard {
+#card_maker, .flashcard, #flashcard_quiz {
     
     height: 520px;
     box-shadow: 0px 2px 8px;
@@ -27,7 +27,7 @@
     resize: none;
 }
 
-.flashcard {
+.flashcard, #flashcard_quiz {
     min-width: 325px;
     width: 25vw;
     max-width: 450px;
@@ -44,6 +44,13 @@
 .flashcard:hover {
     cursor: pointer;
     transform: scale(1.05);
+}
+#flashcard_quiz {
+    max-width: 500px;
+    min-width: 350px;
+    min-height: 575px;
+    height: 75svh;
+    max-height: 600px;
 }
 .divider {
     height: 64px;
