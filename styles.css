@@ -6,7 +6,7 @@
     scroll-snap-type: mandatory;
 }
 #home .container, #cards .container-fluid, #about .container {
-    min-height: 100dvh;
+    min-height: 100svh;
     scroll-snap-align: start;
 }
 .card_btn {
