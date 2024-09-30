@@ -7,7 +7,14 @@ const deleteAllCardsBtn = document.querySelector('#del_card_btn')
 const questionInput = document.querySelector('#question_input')
 const answerInput = document.querySelector('#answer_input')
 const flashcards = document.querySelectorAll('.flashcard')
-const invalidInputModal = document.querySelector('#invalid_input_modal')
+const playBtn = document.querySelector('#play_card_btn')
+const stopBtn = document.querySelector('#stop_btn')
+const exitBtn = document.querySelector('#exit_btn')
+const aboutSection = document.querySelector('#about')
+const cardSection = document.querySelector('#cards')
+const homeSection = document.querySelector('#home')
+const playSection = document.querySelector('#play_cards')
+
 var cardStorage = [];
 
 
@@ -92,4 +99,70 @@ flashcards.forEach(card => {
 function flipToggler() {
     this.classList.toggle('flip')
 }
+
+playBtn.addEventListener('click', () => {
+
+    displayToggle(true)
+    timerStart()
+    
+})
+
+exitBtn.addEventListener('click', () => {
+    displayToggle(false)
+    cardSection.scrollIntoView()
+})
+
+function displayToggle(isPlay) {
+    if (isPlay) {
+        homeSection.style.display = "none"
+        aboutSection.style.display = "none"
+        cardSection.style.display = "none"
+        playSection.style.display = "block"
+    }
+    else {
+        
+        homeSection.style.display = "block"
+        aboutSection.style.display = "block"
+        cardSection.style.display = "block"
+        playSection.style.display = "none"
+    }
+}
+
+function timerStart() {
+    var seconds = 0, minutes = 0, hours = 0;
+    const displayTimer = document.querySelector('#timer')
+    const timer = setInterval(() => {
+        seconds++
+        if (seconds == 60) {
+            minutes++
+            seconds = 0
+        }
+        if (minutes == 60) {
+            hours++
+            minutes = 0
+        } 
+
+
+        displayTimer.textContent = zeroPadding(hours) + ":" + zeroPadding(minutes) + ":" + zeroPadding(seconds)
+    }, 1000)
+    
+
+    function zeroPadding(number) {
+        if (number < 10) {
+            number = "0" + number
+        }
+        return number
+    }
+    stopBtn.addEventListener('click', stopTimer)
+
+    function stopTimer() {
+        clearInterval(timer)
+    }
+
+
+}
+
+
+
+
 
