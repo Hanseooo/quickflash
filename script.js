@@ -109,6 +109,7 @@ playBtn.addEventListener('click', () => {
 
 exitBtn.addEventListener('click', () => {
     displayToggle(false)
+    stopTimer()
     cardSection.scrollIntoView()
 })
 
