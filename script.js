@@ -107,11 +107,7 @@ playBtn.addEventListener('click', () => {
     
 })
 
-exitBtn.addEventListener('click', () => {
-    displayToggle(false)
-    stopTimer()
-    cardSection.scrollIntoView()
-})
+
 
 function displayToggle(isPlay) {
     if (isPlay) {
@@ -160,7 +156,11 @@ function timerStart() {
         clearInterval(timer)
     }
 
-
+exitBtn.addEventListener('click', () => {
+    displayToggle(false)
+    stopTimer()
+    cardSection.scrollIntoView()
+})
 }
 
 
