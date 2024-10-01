@@ -159,7 +159,7 @@ function timerStart() {
 exitBtn.addEventListener('click', () => {
     displayToggle(false)
     stopTimer()
-    seconds = 0, minutes = 0, hours = 0;
+    displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
     cardSection.scrollIntoView()
 })
 }
