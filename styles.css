@@ -5,7 +5,7 @@
     font-family: "Poppins", sans-serif;
     scroll-snap-type: mandatory;
 }
-#home .container, #cards .container-fluid, #about .container, #play_cards .container  {
+#home .container, #cards .container-fluid, #about .container, #play_cards .container, #instructions_container  {
     min-height: 100svh;
     scroll-snap-align: start;
 }
