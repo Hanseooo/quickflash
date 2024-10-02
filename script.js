@@ -14,6 +14,7 @@ const aboutSection = document.querySelector('#about')
 const cardSection = document.querySelector('#cards')
 const homeSection = document.querySelector('#home')
 const playSection = document.querySelector('#play_cards')
+const instructionContainer = document.querySelector('#instructions_container')
 
 var cardStorage = [];
 
