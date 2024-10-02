@@ -123,14 +123,14 @@ function displayToggle(isPlay) {
         aboutSection.style.display = "block"
         cardSection.style.display = "block"
         playSection.style.display = "none"
-        instructionContainer.classList.remove('d-flex')
+        instructionContainer.classList.remove('flex-column', 'align-items-center', 'justify-content-center')
     }
 }
 
 async function playCard() {
     const quizContainer = document.querySelector('#quiz_container')
     const instructionTimer = document.querySelector('#instruction_timer')
-    instructionContainer.classList.add('d-flex')
+    instructionContainer.classList.add('flex-column', 'align-items-center', 'justify-content-center')
     displayToggle(true)
     //const randCard = cardStorage[Math.floor(Math.random() * cardStorage.length)]
     const displayInstruction = new Promise((resolve) => {
@@ -148,7 +148,7 @@ async function playCard() {
 
     const playStart = await displayInstruction
 
-    instructionContainer.classList.remove('d-flex')
+    instructionContainer.classList.remove('flex-column', 'align-items-center', 'justify-content-center')
     playSection.style.display = "block"
                     
     
