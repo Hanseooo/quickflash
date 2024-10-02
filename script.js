@@ -102,8 +102,8 @@ function flipToggler() {
 
 playBtn.addEventListener('click', () => {
 
-    displayToggle(true)
-    timerStart()
+    
+    playCard()
     
 })
 
@@ -114,7 +114,7 @@ function displayToggle(isPlay) {
         homeSection.style.display = "none"
         aboutSection.style.display = "none"
         cardSection.style.display = "none"
-        playSection.style.display = "block"
+        playSection.style.display = "none"
     }
     else {
         
@@ -122,10 +122,37 @@ function displayToggle(isPlay) {
         aboutSection.style.display = "block"
         cardSection.style.display = "block"
         playSection.style.display = "none"
+        instructionContainer.classList.remove('d-flex')
     }
 }
 
-function timerStart() {
+async function playCard() {
+    const quizContainer = document.querySelector('#quiz_container')
+    const instructionTimer = document.querySelector('#instruction_timer')
+    instructionContainer.classList.add('d-flex')
+    displayToggle(true)
+    //const randCard = cardStorage[Math.floor(Math.random() * cardStorage.length)]
+    const displayInstruction = new Promise((resolve) => {
+            let count = 3
+            let timer = setInterval(() => {
+                instructionTimer.textContent = count
+                count--
+                if (count == 0) {
+                    clearInterval(timer)
+                    instructionTimer.textContent = 3
+                    resolve()
+                }
+            }, 1000)
+    }) 
+
+    const playStart = await displayInstruction
+
+    instructionContainer.classList.remove('d-flex')
+    playSection.style.display = "block"
+                    
+    
+    
+
     var seconds = 0, minutes = 0, hours = 0;
     const displayTimer = document.querySelector('#timer')
     const timer = setInterval(() => {
@@ -156,12 +183,12 @@ function timerStart() {
         clearInterval(timer)
     }
 
-exitBtn.addEventListener('click', () => {
-    displayToggle(false)
-    stopTimer()
-    displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
-    cardSection.scrollIntoView()
-})
+    exitBtn.addEventListener('click', () => {
+        displayToggle(false)
+        stopTimer()
+        displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
+        cardSection.scrollIntoView()
+    })
 }
 
 
