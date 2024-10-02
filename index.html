@@ -135,8 +135,26 @@
           -->
       </div>
     </section>
-    <section id="play_cards" class="" style="display: none;">
-      <div class="container pt-5">
+<div>
+      <div class="container d-flex flex-column align-items-center justify-content-center p-4" id="instructions_container" style="display: none;">
+        <div class="card p-2 p-md-4 col-8 col-lg-4 col-md-6 shadow border-2 border-secondary" >
+          <div class="card-body">
+            <div class="card-title divider"><h3>Heads Up!</h3></div>
+            <div class="card-text">
+              Input answers to the following flash cards as fast as possible!
+            </div>
+          </div>
+        </div>
+        <h2 class="mt-5 text-center fw-semibold my-4" id="instruction_timer">3</h2>
+      </div>
+    </div>
+
+  
+    <section id="play_cards" class="bg-primary" style="display: none;">
+      
+
+        
+      <div class="container pt-5" id="quiz_container">
         <h2 class="mt-5 text-center fw-semibold fs-1 my-4" id="timer">
           00:00:00
         </h2>
