@@ -209,6 +209,7 @@ async function playCard() {
             stopBtn.textContent = "stop"
             scoreCard.style.display = "none"
             isReplay = false
+            instructionContainer.classList.remove('d-flex')
             displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
             playCard()
         }
