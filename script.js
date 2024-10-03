@@ -149,7 +149,7 @@ async function playCard() {
     flashcardQuiz.classList.remove('d-none')
     displayToggle(true)
     isMainGameDone = false
-    var isReplay
+    var isReplay = false
     
     const displayInstruction = new Promise((resolve) => {
             let count = 3
