@@ -15,8 +15,14 @@ const cardSection = document.querySelector('#cards')
 const homeSection = document.querySelector('#home')
 const playSection = document.querySelector('#play_cards')
 const instructionContainer = document.querySelector('#instructions_container')
+const flashcardQuiz = document.querySelector('#flashcard_quiz')
+const displayScore = document.querySelector('#display_score')
+const scoreCard = document.querySelector('#score_card')
 
 var cardStorage = [];
+var userScore = 0
+var isMainGameDone = false
+var timer
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -38,17 +44,23 @@ newCardBtn.addEventListener('click', () => {
 closeCardMakerBtn.addEventListener('click', () => {
     cardMaker.style.display = "none"
 })
-addCardBtn.addEventListener('click', () => {
+
+addCardBtn.addEventListener('click', createInput)
+answerInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        createInput()
+    }
+})
+
+function createInput() {
     if (questionInput.value == "" || answerInput == "") {
-        invalidInputModal.classList.add("show")
     }
     else {
         saveInputs()
         questionInput.value = ""
         answerInput.value = "" 
     }
-    
-})
+}
 
 function saveInputs() {
     var inputs = {
@@ -123,6 +135,7 @@ function displayToggle(isPlay) {
         aboutSection.style.display = "block"
         cardSection.style.display = "block"
         playSection.style.display = "none"
+        scoreCard.style.display = "none"
         instructionContainer.classList.remove('d-flex')
     }
 }
@@ -131,8 +144,11 @@ async function playCard() {
     const quizContainer = document.querySelector('#quiz_container')
     const instructionTimer = document.querySelector('#instruction_timer')
     instructionContainer.classList.add('d-flex')
+    flashcardQuiz.classList.add('d-flex')
+    flashcardQuiz.classList.remove('d-none')
     displayToggle(true)
-    //const randCard = cardStorage[Math.floor(Math.random() * cardStorage.length)]
+    isMainGameDone = false
+    
     const displayInstruction = new Promise((resolve) => {
             let count = 3
             let timer = setInterval(() => {
@@ -150,13 +166,10 @@ async function playCard() {
 
     instructionContainer.classList.remove('d-flex')
     playSection.style.display = "block"
-                    
-    
-    
 
     var seconds = 0, minutes = 0, hours = 0;
     const displayTimer = document.querySelector('#timer')
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
         seconds++
         if (seconds == 60) {
             minutes++
@@ -170,6 +183,18 @@ async function playCard() {
 
         displayTimer.textContent = zeroPadding(hours) + ":" + zeroPadding(minutes) + ":" + zeroPadding(seconds)
     }, 1000)
+
+    var mainGameStart = new Promise((resolve) => {
+        mainGame().then(() => resolve())
+    })
+    
+    await mainGameStart
+
+    if (isMainGameDone) {
+        clearInterval(timer)
+    }
+    displayScore.textContent = userScore + " / " + cardStorage.length
+    scoreCard.style.display = "block"
     
 
     function zeroPadding(number) {
@@ -190,8 +215,126 @@ async function playCard() {
         displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
         cardSection.scrollIntoView()
     })
+
+    
+
+    
 }
 
+async function mainGame() {
+    const displayCardQuestion = document.querySelector('#card_question')
+    var userInput = document.querySelector('#input_answer')
+    var nextBtn = document.querySelector('#next_btn')
+    var cardIndexArray = randomNumGenerator()
+    var count = 0
+    userScore = 0
+    var skip = true
+    var itemInterval, cardIndex
+
+
+    console.log(cardStorage)
+    console.log(cardIndexArray)
+
+    
+
+    
+
+    const cardContent = new Promise((resolve) => {
+        
+        function quizGame() {
+            if (count >= cardIndexArray.length) {
+                clearInterval(itemInterval)
+                console.log("cleared and resolved")
+                resolve()
+                return
+            }
+            cardIndex = cardIndexArray[count]
+            displayCardQuestion.textContent = cardStorage[cardIndex].question
+            userInput.value = ""
+        
+            console.log(cardStorage[cardIndex])
+            console.log(cardStorage[cardIndex].question)
+            nextBtn.replaceWith(nextBtn.cloneNode(true))
+            userInput.replaceWith(userInput.cloneNode(true))
+            nextBtn = document.querySelector('#next_btn')
+            userInput = document.querySelector('#input_answer')
+            count++
+            userInput.focus()
+
+            
+
+            nextBtn.addEventListener('click', () => {
+                nextFlashCard(quizGame, cardIndex)
+                return
+            })
+            userInput.addEventListener('keydown', (event) => {
+                if (event.key == 'Enter') {
+                    nextFlashCard(quizGame, cardIndex)
+                    return
+                }
+            } )
+            stopBtn.addEventListener('click', () => {
+                nextFlashCard(quizGame, cardIndex)
+                clearInterval(itemInterval)
+                resolve()
+                return
+            })
+            
+            
+        }
+
+        quizGame()
+        itemInterval = setInterval(quizGame, 7000)
+    })
+
+    await cardContent
+
+    flashcardQuiz.classList.remove('d-flex')
+    flashcardQuiz.classList.add('d-none')
+    isMainGameDone = true
+    console.log(userScore)
+
+    function submitAnswer(cardIndex) {
+        var correctAnswer = cardStorage[cardIndex].answer.toLowerCase()
+        var userAnswer = userInput.value.toLowerCase()
+        if (userAnswer === correctAnswer) {
+            userScore++
+        }
+
+    }
+
+    function nextFlashCard(callback, cardIndex) {
+        clearInterval(itemInterval);
+        itemInterval = setInterval(callback, 7000);
+        submitAnswer(cardIndex)
+        console.log("clicked " + userScore)
+        callback()
+        userInput.focus()
+    }
+
+    function randomNumGenerator() {
+        var randomNum, count = 0, randomNumArray = []
+
+        do {
+            randomNum = Math.floor(Math.random() * cardStorage.length)
+            if (randomNumArray.length == 0) {
+                randomNumArray.push(randomNum)
+                count++
+            }
+            else {
+                if (!randomNumArray.includes(randomNum)) {
+                    randomNumArray.push(randomNum)
+                    count++
+                }
+
+            } 
+        } while(count != cardStorage.length)
+
+        return randomNumArray
+    
+    }
+
+}
 
 
 
