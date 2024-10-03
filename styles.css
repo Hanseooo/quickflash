@@ -57,4 +57,16 @@
     margin-bottom: 24px;
 }
 
+#score_card {
+    width: 40vw;
+    min-width: 350px;
+    max-width: 400px;
+    margin: auto;
+}
+
+#display_score {
+    font-size: clamp(1.5rem, 2.5vw + 0.5rem, 3rem)
+}
+
+
 
