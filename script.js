@@ -149,7 +149,7 @@ async function playCard() {
     flashcardQuiz.classList.remove('d-none')
     displayToggle(true)
     isMainGameDone = false
-    var isReplay = false
+    var isReplay
     
     const displayInstruction = new Promise((resolve) => {
             let count = 3
@@ -159,6 +159,7 @@ async function playCard() {
                 if (count == -1) {
                     clearInterval(timer)
                     instructionTimer.textContent = 3
+                    isReplay = false
                     resolve()
                 }
             }, 1000)
@@ -194,23 +195,27 @@ async function playCard() {
 
     if (isMainGameDone) {
         clearInterval(timer)
+        displayScore.textContent = userScore + " / " + cardStorage.length
+        scoreCard.style.display = "block"
+        stopBtn.textContent = "replay"
+        isReplay = true
+        stopTimer()
     }
-    displayScore.textContent = userScore + " / " + cardStorage.length
-    scoreCard.style.display = "block"
-    stopBtn.textContent = "replay"
-    isReplay = true
+    
 
     stopBtn.addEventListener('click', () => {
         if (isReplay) {
-            isReplay = false
             stopBtn.textContent = "stop"
             scoreCard.style.display = "none"
             stopTimer()
+            isReplay = false
+            displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
             playCard()
         }
         else {
             stopTimer()
             stopBtn.textContent = "replay"
+            isMainGameDone = true
             isReplay = true
         }
     })
