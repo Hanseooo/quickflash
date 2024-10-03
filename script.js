@@ -143,7 +143,7 @@ function displayToggle(isPlay) {
 
 async function playCard() {
     const quizContainer = document.querySelector('#quiz_container')
-    const instructionTimer = document.querySelector('#instruction_timer')
+    const displayInstructionTimer = document.querySelector('#instruction_timer')
     instructionContainer.classList.add('d-flex')
     flashcardQuiz.classList.add('d-flex')
     flashcardQuiz.classList.remove('d-none')
@@ -153,12 +153,12 @@ async function playCard() {
     
     const displayInstruction = new Promise((resolve) => {
             let count = 3
-            let timer = setInterval(() => {
-                instructionTimer.textContent = count
+            let instructionTimer = setInterval(() => {
+                displayInstructionTimer.textContent = count
                 count--
                 if (count == -1) {
-                    clearInterval(timer)
-                    instructionTimer.textContent = 3
+                    clearInterval(instructionTimer)
+                    displayInstructionTimer.textContent = 3
                     isReplay = false
                     resolve()
                 }
@@ -172,7 +172,7 @@ async function playCard() {
 
     var seconds = 0, minutes = 0, hours = 0;
     const displayTimer = document.querySelector('#timer')
-    timer = setInterval(() => {
+    var timer = setInterval(() => {
         seconds++
         if (seconds == 60) {
             minutes++
@@ -204,16 +204,15 @@ async function playCard() {
     
 
     stopBtn.addEventListener('click', () => {
+        stopTimer()
         if (isReplay) {
             stopBtn.textContent = "stop"
             scoreCard.style.display = "none"
-            stopTimer()
             isReplay = false
             displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
             playCard()
         }
         else {
-            stopTimer()
             stopBtn.textContent = "replay"
             isMainGameDone = true
             isReplay = true
@@ -230,6 +229,7 @@ async function playCard() {
 
     function stopTimer() {
         clearInterval(timer)
+        clearInterval(itemInterval)
     }
 
     exitBtn.addEventListener('click', () => {
@@ -243,6 +243,7 @@ async function playCard() {
 
     
 }
+var itemInterval
 
 async function mainGame() {
     const displayCardQuestion = document.querySelector('#card_question')
@@ -252,7 +253,7 @@ async function mainGame() {
     var count = 0
     userScore = 0
     var skip = true
-    var itemInterval, cardIndex
+    var cardIndex
 
 
     console.log(cardStorage)
