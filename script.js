@@ -48,6 +48,7 @@ closeCardMakerBtn.addEventListener('click', () => {
 addCardBtn.addEventListener('click', createInput)
 answerInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
+        event.preventDefault()
         createInput()
     }
 })
