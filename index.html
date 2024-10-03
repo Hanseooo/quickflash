@@ -168,7 +168,7 @@
                 class="border-bottom border-dark divider"
                 id="question_container"
               ></div>
-              <p>
+              <p id="card_question">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Repudiandae eaque inventore excepturi! Deleniti porro repellat
                 facere fugiat possimus alias commodi.
@@ -180,16 +180,23 @@
                 <input
                   type="text"
                   class="form-control mb-2 border border-secondary-subtle"
+                  id="input_answer"
+                  autocomplete="off"
                 />
               </div>
             </div>
             <div class="text-center">
-              <button class="btn p-2 border border-black px-3 shadow mb-4">
+              <button class="btn p-2 border border-black px-3 shadow mb-4" id="next_btn">
                 next
               </button>
             </div>
           </div>
         </div>
+      <div class="card p-4 my-5 shadow border-2 border-secondary" id="score_card" style="display: none;">
+        <div class="divider border-bottom border-secondary-subtle">
+        <div class="card-title"><h2 class="fst-italic fw-semibold">Score</h2></div></div>
+        <div class="card-body d-flex justify-content-center"><h2 class="fw-semibold fst-italic" id="display_score"></h2></div>
+      </div>
         <div class="text-center mt-2 mt-sm-5 p-4 p-sm-5">
           <button
             class="btn btn p-2 border border-black px-4 shadow mx-2"
