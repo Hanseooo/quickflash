@@ -206,11 +206,7 @@ async function playCard() {
     stopBtn.addEventListener('click', () => {
         stopTimer()
         if (isReplay) {
-            stopBtn.textContent = "stop"
-            scoreCard.style.display = "none"
-            isReplay = false
-            instructionContainer.classList.remove('d-flex')
-            displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
+            isReplayExit()
             playCard()
         }
         else {
@@ -236,11 +232,17 @@ async function playCard() {
     exitBtn.addEventListener('click', () => {
         displayToggle(false)
         stopTimer()
-        displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
+        isReplayExit()
         cardSection.scrollIntoView()
     })
 
-    
+    function isReplayExit() {
+        stopBtn.textContent = "stop"
+        scoreCard.style.display = "none"
+        isReplay = false
+        instructionContainer.classList.remove('d-flex')
+        displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
+    }
 
     
 }
