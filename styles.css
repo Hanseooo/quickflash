@@ -5,7 +5,7 @@
     font-family: "Poppins", sans-serif;
     scroll-snap-type: mandatory;
 }
-#home .container, #cards .container-fluid, #about .container, #play_cards .container, #instructions_container  {
+#home .container, #cards .container-fluid, #about .container, #play_cards .container, #instructions_containe, #loading_container  {
     min-height: 100svh;
     scroll-snap-align: start;
 }
@@ -66,6 +66,69 @@
 
 #display_score {
     font-size: clamp(1.5rem, 2.5vw + 0.5rem, 3rem)
+}
+
+#loading_text {
+    stroke: rgb(20, 20, 20);
+    fill: transparent;
+    animation: 3s cubic-bezier(0.95, 0.05, 0.795, 0.035) infinite alternate loading_animation;
+    font-size: clamp(0.5rem, 1vw + 0.25rem, 0.75rem);
+}
+#loading_text2 {
+    font-size: clamp(0.25rem, 1vw + 0.25rem, 0.75rem);
+    animation: 3s cubic-bezier(0.95, 0.05, 0.795, 0.035) infinite alternate fade_in;
+}
+#site_content {
+    animation: 500ms ease-in-out zoom_out;
+}
+
+@keyframes fade_in {
+    0% {
+        opacity: 0;
+        filter: blur(2px);
+    }
+    25% {
+        filter: blur(0);
+    }
+    50%,
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes zoom_out  {
+    0% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@keyframes loading_animation {
+    0% {
+        stroke: rgb(20, 20, 20);
+        fill: transparent;
+        stroke-dashoffset: 10%;
+        stroke-dasharray: 0 10%;
+    }
+    50% {
+        stroke: rgb(20, 20, 20);
+        fill: transparent;
+    }
+    65% {
+        stroke-width: 1.5;
+        stroke: rgb(20, 20, 20);
+        fill: transparent;
+        stroke-dashoffset: -10%;
+        stroke-dasharray: 10% 0;
+    }
+    85%,
+    100% {
+        fill: rgb(20, 20, 20);
+        stroke: transparent;
+    }
 }
 
 
