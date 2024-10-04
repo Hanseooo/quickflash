@@ -5,7 +5,10 @@
     font-family: "Poppins", sans-serif;
     scroll-snap-type: mandatory;
 }
-#home .container, #cards .container-fluid, #about .container, #play_cards .container, #instructions_containe, #loading_container  {
+body {
+    position:relative;
+}
+#home .container, #cards .container-fluid, #about .container, #play_cards .container, #instructions_container, #loading_container  {
     min-height: 100svh;
     scroll-snap-align: start;
 }
@@ -81,6 +84,8 @@
 #site_content {
     animation: 500ms ease-in-out zoom_out;
 }
+
+
 
 @keyframes fade_in {
     0% {
