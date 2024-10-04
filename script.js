@@ -33,6 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 })
 
+window.addEventListener("load", ()=> {
+    const loadingContainer = document.querySelector('#loading_container')
+    const siteContent = document.querySelector('#site_content')
+    loadingContainer.classList.remove('d-flex')
+    siteContent.style.display = 'block'
+})
+
 
 
 
