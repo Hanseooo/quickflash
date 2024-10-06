@@ -99,6 +99,22 @@ body {
     background-color: rgba(46, 46, 46, 0.342);
 }
 
+#score_card, #instructions_container .card {
+    animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) flip_y;
+}
+
+.flip_y {
+    animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) flip_y;
+}
+
+.zoom_out {
+    animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) zoom_out;
+}
+
+.flashcard .flip_y {
+    transition: all 0.5s ease-in-out;
+}
+
 #loading_text {
     stroke: rgb(20, 20, 20);
     fill: transparent;
@@ -140,6 +156,20 @@ body {
     }
 }
 
+@keyframes flip_y {
+    0% {
+        opacity: 0;
+        transform: perspective(600px) rotateY(180deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: perspective(600px) rotateY(360deg);
+        transform: scale(1.05);
+    }
+}
+
 
 @keyframes loading_animation {
     0% {
@@ -165,6 +195,7 @@ body {
         stroke: transparent;
     }
 }
+
 
 
 
