@@ -261,13 +261,13 @@ async function playCard() {
     await mainGameStart
 
     if (isMainGameDone) {
-        //clearInterval(timer)
-        stopTimer()
+        clearInterval(timer)
         displayScore.textContent = userScore + " / " + cardStorage.length
         scoreCard.style.display = "block"
         stopBtn.textContent = "replay"
         isReplay = true
         exitBtn.disabled = false
+        stopTimer()
     }
     
 
@@ -309,7 +309,6 @@ async function playCard() {
         scoreCard.style.display = "none"
         isReplay = false
         instructionContainer.classList.remove('d-flex')
-        stopTimer()
         displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
     }
 
