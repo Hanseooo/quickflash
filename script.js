@@ -231,6 +231,7 @@ async function playCard() {
             }, 1000)
     }) 
 
+    exitBtn.disabled = true
     await displayInstruction
 
     instructionContainer.classList.remove('d-flex')
@@ -260,12 +261,13 @@ async function playCard() {
     await mainGameStart
 
     if (isMainGameDone) {
-        clearInterval(timer)
+        //clearInterval(timer)
+        stopTimer()
         displayScore.textContent = userScore + " / " + cardStorage.length
         scoreCard.style.display = "block"
         stopBtn.textContent = "replay"
         isReplay = true
-        stopTimer()
+        exitBtn.disabled = false
     }
     
 
@@ -307,6 +309,7 @@ async function playCard() {
         scoreCard.style.display = "none"
         isReplay = false
         instructionContainer.classList.remove('d-flex')
+        stopTimer()
         displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
     }
 
@@ -377,7 +380,7 @@ async function mainGame() {
         }
 
         quizGame()
-        itemInterval = setInterval(quizGame, 7000)
+        itemInterval = setInterval(quizGame, 10000)
     })
 
     await cardContent
@@ -398,7 +401,7 @@ async function mainGame() {
 
     function nextFlashCard(callback, cardIndex) {
         clearInterval(itemInterval);
-        itemInterval = setInterval(callback, 7000);
+        itemInterval = setInterval(callback, 10000);
         submitAnswer(cardIndex)
         console.log("clicked " + userScore)
         callback()
