@@ -159,14 +159,14 @@ function addCard(card) {
     cardBody.appendChild(displayQuestion)
     newCard.appendChild(displayAnswer)
     cardContainer.appendChild(newCard)
+    addAnimation(newCard, 'zoom_out')
     newCard.addEventListener('click', () => {
+        addAnimation(newCard, 'flip_y')
         if (displayAnswer.style.visibility == "hidden") {
             displayAnswer.style.visibility = "visible" 
-
         }
         else  {
             displayAnswer.style.visibility = "hidden"
-
         }
         
     })
@@ -326,16 +326,10 @@ async function mainGame() {
     var skip = true
     var cardIndex
 
-
     console.log(cardStorage)
     console.log(cardIndexArray)
 
-    
-
-    
-
     const cardContent = new Promise((resolve) => {
-        
         function quizGame() {
             if (count >= cardIndexArray.length) {
                 clearInterval(itemInterval)
@@ -346,7 +340,7 @@ async function mainGame() {
             cardIndex = cardIndexArray[count]
             displayCardQuestion.textContent = cardStorage[cardIndex].question
             userInput.value = ""
-        
+            addAnimation(flashcardQuiz, 'flip_y')
             console.log(cardStorage[cardIndex])
             console.log(cardStorage[cardIndex].question)
             nextBtn.replaceWith(nextBtn.cloneNode(true))
@@ -354,9 +348,7 @@ async function mainGame() {
             nextBtn = document.querySelector('#next_btn')
             userInput = document.querySelector('#input_answer')
             count++
-            userInput.focus()
-
-            
+            userInput.focus()    
 
             nextBtn.addEventListener('click', () => {
                 nextFlashCard(quizGame, cardIndex)
@@ -402,7 +394,6 @@ async function mainGame() {
         clearInterval(itemInterval);
         itemInterval = setInterval(callback, 10000);
         submitAnswer(cardIndex)
-        console.log("clicked " + userScore)
         callback()
         userInput.focus()
     }
@@ -429,6 +420,11 @@ async function mainGame() {
     
     }
 
+}
+
+function addAnimation(element, animationClass) {
+    element.classList.add(animationClass)
+    element.addEventListener('animationend', ()=> element.classList.remove(animationClass))
 }
 
 
