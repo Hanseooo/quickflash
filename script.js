@@ -18,11 +18,21 @@ const instructionContainer = document.querySelector('#instructions_container')
 const flashcardQuiz = document.querySelector('#flashcard_quiz')
 const displayScore = document.querySelector('#display_score')
 const scoreCard = document.querySelector('#score_card')
+const modalbg = document.querySelector('#modal_bg')
+const deleteCardsModal = document.querySelector('#delete_cards_modal')
+const closeModalBtns = document.querySelectorAll('.modal_close_btn')
+const dont_remind_checkbox = document.querySelector('dont_remind_toggle')
+const confirmDeleteBtn = document.querySelector('#confirm_delete_btn')
+const smallModal = document.querySelector('#small_modal')
+const smallModalText = document.querySelector('#small_modal p')
+const smallModalHeader = document.querySelector('#small_modal h4')
 
 var cardStorage = [];
 var userScore = 0
 var isMainGameDone = false
 var timer
+var dontRemind = false;
+var modalID = 0
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,12 +50,32 @@ window.addEventListener("load", ()=> {
     siteContent.style.display = 'block'
 })
 
+deleteAllCardsBtn.addEventListener('click', () => {
+    modalID = 1
+    if (!dontRemind) {
+        displayModal(deleteCardsModal)
+        
+    }
+    else {
+        deleteAllCards()
+    }
+})
 
+modalbg.addEventListener('click', switchModals)
 
-
+confirmDeleteBtn.addEventListener('click', () => {
+    deleteAllCards()
+    if (document.querySelector('#dont_remind_cb').checked) {
+        dontRemind = true
+    }
+    displayModal(deleteCardsModal)
+})
+closeModalBtns.forEach((button) => {
+    button.addEventListener('click', switchModals)
+})
 
 newCardBtn.addEventListener('click', () => {
-    cardMaker.style.display = "block"
+    cardMaker.style.display == "none" ? cardMaker.style.display = "block" : cardMaker.style.display = "none"
 })
 
 closeCardMakerBtn.addEventListener('click', () => {
@@ -53,6 +83,7 @@ closeCardMakerBtn.addEventListener('click', () => {
 })
 
 addCardBtn.addEventListener('click', createInput)
+
 answerInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         event.preventDefault()
@@ -60,8 +91,39 @@ answerInput.addEventListener('keydown', (event) => {
     }
 })
 
+function deleteAllCards() {
+    cardContainer.innerHTML = ""
+    cardStorage = []
+    localStorage.clear()
+}
+
+function displayModal(modal) {
+    if (modal.style.display == 'none') {
+        modalbg.style.display = 'block'
+        modal.style.display = 'block' 
+    }
+    else if (modal.style.display == 'block') {
+        modalbg.style.display = 'none'
+        modal.style.display = 'none'
+    }
+}
+
+function switchModals() {
+    switch(modalID) {
+        case 1:
+            displayModal(deleteCardsModal)
+            break;
+        case 2:
+            displayModal(smallModal)
+    }
+}
+
 function createInput() {
-    if (questionInput.value == "" || answerInput == "") {
+    if (!questionInput.value.trim() || !answerInput.value.trim()) {
+        modalID = 2
+        smallModalText.textContent = "please enter a valid input to the Question and Answer fields."
+        smallModalHeader.textContent = "Unable to create card"
+        displayModal(smallModal)
     }
     else {
         saveInputs()
@@ -109,22 +171,19 @@ function addCard(card) {
         
     })
 }
-deleteAllCardsBtn.addEventListener('click', () => {
-    cardContainer.innerHTML = ""
-    cardStorage = []
-    localStorage.clear()
-})
-flashcards.forEach(card => {
-    card.addEventListener('click', flipToggler)
-})
-function flipToggler() {
-    this.classList.toggle('flip')
-}
+
 
 playBtn.addEventListener('click', () => {
-
+    if (cardStorage.length != 0) {
+        playCard()
+    }
+    else {
+        modalID = 2
+        smallModalText.textContent = "There are no existing cards. Create  a card to play."
+        smallModalHeader.textContent = "No cards found"
+        displayModal(smallModal)
+    }
     
-    playCard()
     
 })
 
