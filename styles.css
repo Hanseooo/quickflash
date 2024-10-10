@@ -39,10 +39,6 @@ body {
     overflow-wrap: break-word;
     font-size: clamp(1.2rem, 1.75vw + 0.5rem, 1.5rem);
     transition: 0.25s  ease-in-out;
-    -webkit-user-select: none;
-    -moz-user-select: none; 
-    -ms-user-select: none; 
-    user-select: none; 
 }
 .flashcard:hover {
     cursor: pointer;
@@ -100,11 +96,15 @@ body {
 }
 
 #score_card, #instructions_container .card {
-    animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) flip_y;
+    animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) flip_y2;
 }
 
 .flip_y {
     animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) flip_y;
+}
+
+.flip_y2 {
+    animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) flip_y2;
 }
 
 .zoom_out {
@@ -113,6 +113,13 @@ body {
 
 .flashcard .flip_y {
     transition: all 0.5s ease-in-out;
+}
+
+.flashcard, .flashcard_quiz, #score_card, #instructions_container, #timer, #card_question {
+    -webkit-user-select: none;
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
 }
 
 #loading_text {
@@ -169,6 +176,19 @@ body {
         transform: scale(1.05);
     }
 }
+
+@keyframes flip_y2 {
+    0% {
+        opacity: 0;
+        transform: perspective(600px) rotateY(180deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: perspective(600px) rotateY(360deg);
+    }
+} 
 
 
 @keyframes loading_animation {
