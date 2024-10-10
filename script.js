@@ -160,7 +160,8 @@ function addCard(card) {
     newCard.appendChild(displayAnswer)
     cardContainer.appendChild(newCard)
     addAnimation(newCard, 'zoom_out')
-    newCard.addEventListener('click', () => {
+    newCard.addEventListener('click', flipCard)
+    function flipCard() {
         addAnimation(newCard, 'flip_y')
         if (displayAnswer.style.visibility == "hidden") {
             displayAnswer.style.visibility = "visible" 
@@ -168,8 +169,11 @@ function addCard(card) {
         else  {
             displayAnswer.style.visibility = "hidden"
         }
-        
-    })
+        newCard.removeEventListener('click', flipCard)
+        newCard.addEventListener('animationend', () => {
+            newCard.addEventListener('click', flipCard)
+        })
+    }
 }
 
 
@@ -340,7 +344,7 @@ async function mainGame() {
             cardIndex = cardIndexArray[count]
             displayCardQuestion.textContent = cardStorage[cardIndex].question
             userInput.value = ""
-            addAnimation(flashcardQuiz, 'flip_y')
+            addAnimation(flashcardQuiz, 'flip_y2')
             console.log(cardStorage[cardIndex])
             console.log(cardStorage[cardIndex].question)
             nextBtn.replaceWith(nextBtn.cloneNode(true))
