@@ -8,9 +8,60 @@
 body {
     position:relative;
 }
+
+img, a {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
 #home .container, #cards .container-fluid, #about .container, #play_cards .container, #instructions_container, #loading_container  {
     min-height: 100svh;
-    scroll-snap-align: start;
+}
+
+
+
+#home {
+    background-image: url('images/bg3.png');
+
+}
+
+#hero-img-container {
+    position: relative;
+    z-index: 2;
+}
+#quickflash-lightning {
+    position: absolute;
+    perspective: 900px;
+    animation: 5s ease-out infinite forwards beat;
+}
+#card-img {
+    opacity: 0.75;
+    perspective: 600px;
+}
+
+#flashcard-text-span:hover {
+    text-decoration: underline;
+    cursor: default;
+}
+
+#play_cards, #instructions_container {
+    background-image: url('images/bg3.png');
+}
+
+#home, #play_cards, #cards, #instructions_container {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+#cards {
+    background-image: url('images/bg2.png');
+    position: relative;
+}
+.card-bg, #instructions_container, #score_card, #flashcard_quiz {
+    background-color: rgba(255, 255, 255, 0.301);
+    backdrop-filter: blur(8px);
 }
 .card_btn {
     width: 120px;
@@ -128,7 +179,7 @@ body {
     animation: 3s cubic-bezier(0.95, 0.05, 0.795, 0.035) infinite alternate loading_animation;
     font-size: clamp(0.5rem, 1vw + 0.25rem, 0.75rem);
 }
-#loading_text2, #hahaha {
+#loading_text2 {
     font-size: clamp(0.25rem, 1vw + 0.25rem, 0.75rem);
     animation: 3s cubic-bezier(0.95, 0.05, 0.795, 0.035) infinite alternate fade_in;
 }
@@ -136,9 +187,21 @@ body {
     animation: 500ms ease-in-out zoom_out;
 }
 
-#hahaha {
-    font-size: 2rem;
+.show-element {
+    opacity: 1 !important;
+    animation: 1.5s  cubic-bezier(0.19, 1, 0.22, 1) backwards zoom_out;
 }
+.show-element:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+/* button.show-element:hover {
+    background-color: rgba(232, 232, 232, 0.84) !important;
+    color: rgb(19, 19, 19) !important;
+    outline: 2px solid black !important;;
+} */
+
+
 
 @keyframes fade_in {
     0% {
@@ -190,6 +253,27 @@ body {
     }
 } 
 
+@keyframes beat {
+    0% {
+        transform: scale(1);
+    }
+    5% {
+        transform: scale(1.1);
+    }
+    10% {
+        transform: scale(1);
+    }
+    15% {
+        transform: scale(1.1);
+    }
+    20% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 @keyframes loading_animation {
     0% {
@@ -215,6 +299,17 @@ body {
         stroke: transparent;
     }
 }
+
+.background {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+}
+
 
 
 
