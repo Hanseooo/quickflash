@@ -50,6 +50,8 @@ window.addEventListener("load", ()=> {
     siteContent.style.display = 'block'
 })
 
+
+
 deleteAllCardsBtn.addEventListener('click', () => {
     modalID = 1
     if (!dontRemind) {
@@ -150,6 +152,7 @@ function addCard(card) {
     divider.classList.add("border-bottom", "divider", "border-dark")
     const displayQuestion = document.createElement('p')
     const displayAnswer = document.createElement('h3');
+    newCard.classList.add("card-bg")
     displayAnswer.textContent = card.answer
     displayQuestion.textContent = card.question
     displayAnswer.setAttribute("style", "visibility: hidden;")
@@ -199,6 +202,7 @@ function displayToggle(isPlay) {
         aboutSection.style.display = "none"
         cardSection.style.display = "none"
         playSection.style.display = "none"
+        window.jsparticles.pauseAnimation()
     }
     else {
         
@@ -208,8 +212,16 @@ function displayToggle(isPlay) {
         playSection.style.display = "none"
         scoreCard.style.display = "none"
         instructionContainer.classList.remove('d-flex')
+        window.jsparticles.resumeAnimation()
     }
 }
+
+    async function stopTimer() {
+        clearInterval(timer)
+        clearInterval(itemInterval)
+        clearInterval(instructionTimer)
+    }
+    var timer, itemInterval, instructionTimer
 
 async function playCard() {
     const quizContainer = document.querySelector('#quiz_container')
@@ -220,10 +232,12 @@ async function playCard() {
     displayToggle(true)
     isMainGameDone = false
     var isReplay = false
+
+
     
     const displayInstruction = new Promise((resolve) => {
             let count = 3
-            let instructionTimer = setInterval(() => {
+            instructionTimer = setInterval(() => {
                 displayInstructionTimer.textContent = count
                 count--
                 if (count == -1) {
@@ -271,15 +285,16 @@ async function playCard() {
         stopBtn.textContent = "replay"
         isReplay = true
         exitBtn.disabled = false
-        stopTimer()
+        await stopTimer()
     }
     
 
-    stopBtn.addEventListener('click', () => {
-        stopTimer()
+    stopBtn.addEventListener('click', async () => {
+        await stopTimer()
         if (isReplay) {
-            isReplayExit()
-            playCard()
+            await isReplayExit()
+            await playCard()
+            
         }
         else {
             stopBtn.textContent = "replay"
@@ -296,10 +311,7 @@ async function playCard() {
     }
     
 
-    function stopTimer() {
-        clearInterval(timer)
-        clearInterval(itemInterval)
-    }
+
 
     exitBtn.addEventListener('click', () => {
         displayToggle(false)
@@ -308,7 +320,7 @@ async function playCard() {
         cardSection.scrollIntoView()
     })
 
-    function isReplayExit() {
+    async function isReplayExit() {
         stopBtn.textContent = "stop"
         scoreCard.style.display = "none"
         isReplay = false
@@ -318,7 +330,7 @@ async function playCard() {
 
     
 }
-var itemInterval
+
 
 async function mainGame() {
     const displayCardQuestion = document.querySelector('#card_question')
@@ -334,10 +346,9 @@ async function mainGame() {
     console.log(cardIndexArray)
 
     const cardContent = new Promise((resolve) => {
-        function quizGame() {
+        async function quizGame() {
             if (count >= cardIndexArray.length) {
                 clearInterval(itemInterval)
-                console.log("cleared and resolved")
                 resolve()
                 return
             }
@@ -354,18 +365,18 @@ async function mainGame() {
             count++
             userInput.focus()    
 
-            nextBtn.addEventListener('click', () => {
-                nextFlashCard(quizGame, cardIndex)
+            nextBtn.addEventListener('click', async () => {
+                await nextFlashCard(quizGame, cardIndex)
                 return
             })
-            userInput.addEventListener('keydown', (event) => {
+            userInput.addEventListener('keydown', async (event) => {
                 if (event.key == 'Enter') {
-                    nextFlashCard(quizGame, cardIndex)
+                    await nextFlashCard(quizGame, cardIndex)
                     return
                 }
             } )
-            stopBtn.addEventListener('click', () => {
-                nextFlashCard(quizGame, cardIndex)
+            stopBtn.addEventListener('click', async () => {
+                await nextFlashCard(quizGame, cardIndex)
                 clearInterval(itemInterval)
                 resolve()
                 return
@@ -394,7 +405,7 @@ async function mainGame() {
 
     }
 
-    function nextFlashCard(callback, cardIndex) {
+    async function nextFlashCard(callback, cardIndex) {
         clearInterval(itemInterval);
         itemInterval = setInterval(callback, 10000);
         submitAnswer(cardIndex)
@@ -430,6 +441,113 @@ function addAnimation(element, animationClass) {
     element.classList.add(animationClass)
     element.addEventListener('animationend', ()=> element.classList.remove(animationClass))
 }
+
+const cardImg = document.querySelector('#card-img');
+const lightningImg = document.querySelector('#quickflash-lightning')
+const maxRotationX = 20;
+const maxRotationY = 20; 
+
+document.addEventListener('mousemove', (event) => {
+    const { clientX, clientY } = event;
+    const { left, top, width, height } = cardImg.getBoundingClientRect();
+
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+
+    const deltaX = clientX - centerX;
+    const deltaY = clientY - centerY;
+
+    let rotationX = deltaY / 10; 
+    let rotationY = -deltaX / 10; 
+
+    rotationX = Math.max(-maxRotationX, Math.min(maxRotationX, rotationX));
+    rotationY = Math.max(-maxRotationY, Math.min(maxRotationY, rotationY));
+
+    // Calculate translation values based on rotation
+    const translateX = rotationY * 1; // Adjust the multiplier for desired effect
+    const translateY = rotationX * 1; // Adjust the multiplier for desired effect
+
+    const keyframes = {
+        transform: `rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateX(${translateX}px) translateY(${translateY}px)`
+    };
+
+    // Animate cardImg
+    cardImg.animate(keyframes, {
+        duration: 2000
+    });
+
+    // Animate lightningImg with the same keyframes
+    lightningImg.animate(keyframes, {
+        duration: 4000
+    });
+});
+
+
+
+window.onload = () => {
+    window.jsparticles = Particles.init ({
+        selector: '.background',
+        connectParticles: true,
+        maxParticles: 30,
+        minDistance: 150,
+        color: '#606060',
+    
+        responsive: [
+            {
+                breakpoint: 768,
+                options: {
+                    maxParticles: 25,
+                    minDistance: 125,
+                }
+            },
+             {
+                breakpoint: 566,
+                options: {
+                    maxParticles: 20,
+                    minDistance: 115,
+                }
+             },
+             {
+                breakpoint: 425,
+                options: {
+                    maxParticles: 15,
+                    minDistance: 100,
+                }
+             }
+        ]
+      });
+};
+
+window.onresize = () => {  
+    const background = document.querySelectorAll('.background');
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    background.forEach(function(element) {
+        element.style.width = '95vw';
+        element.style.height = H + 'px'; 
+    })
+ }
+
+ const entryset = document.querySelectorAll('.entryset');
+ const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show-element');
+            }
+        else {
+            entry.target.classList.remove('show-element');
+        }
+    },
+    
+)
+ },
+ {
+    threshold: 0.75,
+    rootMargin: -5 + 'px',
+ })
+entryset.forEach(element => {
+    observer.observe(element);
+})
 
 
 
