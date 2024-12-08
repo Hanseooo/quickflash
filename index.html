@@ -17,7 +17,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=keyboard_double_arrow_down" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   <link href="images/quickflashfavicon.png" rel="icon" type="image">
   </head>
   <body>
@@ -35,25 +35,25 @@
     <div id="modal_bg" style="display: none;"> </div>
     <div id="delete_cards_modal" class="border border-secondary rounded-2 text-bg-light shadow px-2 pt-2 rounded-3" style="display: none;">
       <div class="text-end">
-        <button class="btn-close modal_close_btn"></button>
+        <button class="btn-close modal_close_btn interactable" data-type="button"></button>
       </div>
       <h4 class="fw-semibold border-bottom border-secondary pb-2 fst-italic text-center">Delete all cards</h4>
       <p class="p-2">Are you sure you want to delete all existing cards? This action cannot be undone.</p>
       <div class="px-2">
         <div class="form-check mt-3">
-        <input type="checkbox" class="form-check-input border border-secondary" name="" id="dont_remind_cb">
+        <input type="checkbox" class="form-check-input border border-secondary interactable" data-type="checkbox" name="" id="dont_remind_cb">
         <label for="" class="form-check-label" id="dont_remind_toggle">Don't remind me again</label>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <div class="btn border-secondary mx-2 p-2 modal_btn modal_close_btn">Cancel</div>
-        <div class="btn btn-dark mx-2 p-2 modal_btn" id="confirm_delete_btn">Delete</div>
+        <div class="btn border-secondary mx-2 p-2 modal_btn modal_close_btn interactable" data-type="button">Cancel</div>
+        <div class="btn btn-dark mx-2 p-2 modal_btn interactable" id="confirm_delete_btn" data-type="button">Delete</div>
       </div>
       </div>
     </div>
 
     <div id="small_modal" class="border border-secondary rounded-2 text-bg-light shadow px-2 pt-2 rounded-3" style="display: none;">
       <div class="text-end">
-        <button class="btn-close modal_close_btn"></button>
+        <button class="btn-close modal_close_btn interactable" data-type="button"></button>
       </div>
       <h4 class="fw-semibold border-bottom border-secondary pb-2 fst-italic text-center">No cards found</h4>
       <p class="p-2">There are no existing cards. Create  a card to play.</p>
@@ -62,7 +62,7 @@
     <section id="site_content" style="display: none;" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="0" tabindex="0">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top" id="navbar">
       <div class="container-fluid px-sm-5">
-        <a href="#" class="navbar-brand px-3">QuickFlash</a>
+        <a href="#" class="navbar-brand px-3 interactable" data-type="nav-link">QuickFlash</a>
         <button
           class="navbar-toggler"
           data-bs-toggle="collapse"
@@ -73,13 +73,13 @@
         <div class="collapse navbar-collapse text-center" id="nav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item mx-2 mx-lg-3">
-              <a href="#home" class="nav-link">Home</a>
+              <a href="#home" class="nav-link interactable" data-type = "nav-link">Home</a>
             </li>
             <li class="nav-item mx-2 mx-lg-3">
-              <a href="#cards" class="nav-link">Cards</a>
+              <a href="#cards" class="nav-link interactable" data-type = "nav-link">Cards</a>
             </li>
             <li class="nav-item mx-2 mx-lg-3">
-              <a href="#about" class="nav-link">About</a>
+              <a href="#about" class="nav-link interactable" data-type = "nav-link">About</a>
             </li>
           </ul>
         </div>
@@ -94,17 +94,18 @@
         >
           <div class="col d-flex flex-column justify-content-center align-self-md-center align-self-end">
             <h1 class="fw-bold text-center text-md-start entryset" style="opacity: 0;">QuickFlash</h1>
-            <h4 class="text-center text-md-start entryset" style="opacity: 0;">The ultimate <span id="flashcard-text-span">flashcards</span>  for productive study sessions</h4>
+            <h4 class="text-center text-md-start entryset" style="opacity: 0;">The ultimate <span id="flashcard-text-span" class="interactable" data-type="link">flashcards</span>  for productive study sessions</h4>
           </div>
-          <div class="col d-flex justify-content-center align-self-start align-self-md-center" id = "hero-img-container"><img src="images/quickflashlogo.png" width="400px" class="" id="card-img" alt="">
-          <img src="images/quickflashlightning.png" width="400px" id="quickflash-lightning" alt=""></div>
+          <div class="col d-flex justify-content-center align-self-start align-self-md-center p-2 interactable" data-type="hero-card-container" id = "hero-img-container"><img src="images/quickflashlogo.png" width="400px" data-type = "hero-card" class="interactable" id="card-img" alt="">
+          <img src="images/quickflashlightning.png" width="400px" data-type = "hero-card" class="interactable" id="quickflash-lightning" alt=""></div>
         </div>
         <div
           class="row pt-2 justify-content-center align-items-center"
         >
-        <a href="#cards" class="border-0 text-dark"><span class="material-symbols-outlined" style="font-size: 32px;">
+        <a href="#cards" class="border-0 text-dark"><span class="material-symbols-outlined interactable" data-type="link" style="font-size: 32px;">
           keyboard_double_arrow_down
-          </span></a>
+          </span>
+        </a>
         </div>
       </div>
     </section>
@@ -113,19 +114,22 @@
         <h2 class="mt-5 fst-italic fw-bold fs-1 text-center entryset" style="opacity: 0;">Flashcards</h2>
         <div class="text-center container my-3 mt-4 mb-2">
           <button
-            class="btn btn-dark shadow border-black mx-2 mx-sm-3 p-2 mt-2 mb-2 card_btn entryset"
+            class="btn btn-outline-dark shadow border-black mx-2 mx-sm-3 p-2 mt-2 mb-2 card_btn entryset interactable"
+            data-type="button"
             id="play_card_btn"
           >
             play cards
           </button>
 
           <button
-            class="btn btn-dark shadow border-black mx-2 mx-sm-3 p-2 mt-2 mb-2 card_btn entryset"
+            class="btn btn-outline-dark shadow border-black mx-2 mx-sm-3 p-2 mt-2 mb-2 card_btn entryset interactable"
+            data-type="button"
             id="new_card_btn"
           >
             create card</button
           ><button
-            class="btn btn-dark shadow border-black mx-2 mx-sm-3 p-2 mt-2 mb-2 card_btn entryset"
+            class="btn btn-outline-dark shadow border-black mx-2 mx-sm-3 p-2 mt-2 mb-2 card_btn entryset interactable"
+            data-type="button"
             id="del_card_btn"
           >
             delete cards
@@ -137,7 +141,8 @@
             <div class="text-end p-2">
               <button
                 type="button"
-                class="btn-close"
+                class="btn-close interactable"
+                data-type="button"
                 aria-label="Close"
                 id="card_maker_close"
               ></button>
@@ -150,7 +155,8 @@
               <textarea
                 name=""
                 id="question_input"
-                class="rounded-2 p-2 form-control border border-secondary-subtle"
+                class="rounded-2 p-2 form-control border border-secondary-subtle interactable"
+                data-type="input"
                 rows="4"
               ></textarea>
 
@@ -158,13 +164,15 @@
               <textarea
                 name=""
                 id="answer_input"
-                class="form-control rounded-2 p-2 border border-secondary-subtle"
+                class="form-control rounded-2 p-2 border border-secondary-subtle interactable"
+                data-type="input"
                 rows="2"
               ></textarea>
             </div>
             <div class="text-center mt-4">
               <button
-                class="btn btn-outline-dark shadow border-black border-2 mx-2 mx-sm-3 p-2 mt-2 card_btn"
+                class="btn btn-outline-dark shadow border-black border-2 mx-2 mx-sm-3 p-2 mt-2 card_btn interactable"
+                data-type="button"
                 id="add_card_btn"
               >
                 add card
@@ -238,14 +246,16 @@
               <div>
                 <input
                   type="text"
-                  class="form-control mb-2 border border-secondary-subtle"
+                  class="form-control mb-2 border border-secondary-subtle interactable"
+                  data-type="input"
                   id="input_answer"
                   autocomplete="off"
                 />
               </div>
             </div>
             <div class="text-center">
-              <button class="btn p-2 border border-black px-3 shadow mb-4" id="next_btn">
+              <button class="btn p-2 border border-black px-3 shadow mb-4 interactable"
+              data-type="button" id="next_btn">
                 next
               </button>
             </div>
@@ -258,13 +268,15 @@
       </div>
         <div class="text-center mt-2 mt-md-4 p-4 p-sm-5">
           <button
-            class="btn btn p-2 border border-black px-4 shadow mx-2"
+            class="btn btn p-2 border border-black px-4 shadow mx-2 interactable"
+            data-type="button"
             id="stop_btn"
           >
             stop
           </button>
           <button
-            class="btn btn p-2 border border-black px-4 shadow mx-2"
+            class="btn btn p-2 border border-black px-4 shadow mx-2 interactable"
+            data-type="button"
             id="exit_btn"
           >
             exit
@@ -276,6 +288,16 @@
       <div class="container"></div>
     </section>
   </section>
+  <div id="trailer">
+    <span class="material-symbols-outlined text-center text-light m-auto" id="trailer-icon">
+      <!-- 360 -->
+      <!-- 360 -->
+       <!-- edit -->
+       <!-- sentiment_very_satisfied -->
+       <!-- sentiment_content -->
+       donut_large
+      </span>
+  </div>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
