@@ -29,6 +29,7 @@ img, a {
 #hero-img-container {
     position: relative;
     z-index: 2;
+    min-width: 300px;
 }
 #quickflash-lightning {
     position: absolute;
@@ -39,6 +40,15 @@ img, a {
     opacity: 0.75;
     perspective: 600px;
 }
+
+#quickflash-lightning, #card-img {
+    max-width: 425px;
+    min-width: 300px;
+    width: 30vw;
+    transition: all 1s ease-in-out;
+}
+
+
 
 #flashcard-text-span:hover {
     text-decoration: underline;
@@ -189,10 +199,14 @@ img, a {
 
 .show-element {
     opacity: 1 !important;
-    animation: 1.5s  cubic-bezier(0.19, 1, 0.22, 1) backwards zoom_out;
+    transition: opacity 0.75s ease-in-out;
+    /* animation: 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)  backwards flip_y2; */
 }
 .show-element:nth-child(2) {
     animation-delay: 0.2s;
+}
+.hide-cursor {
+    cursor: none;
 }
 
 /* button.show-element:hover {
@@ -206,12 +220,8 @@ img, a {
 @keyframes fade_in {
     0% {
         opacity: 0;
-        filter: blur(2px);
     }
-    25% {
-        filter: blur(0);
-    }
-    50%,
+
     100%{
         opacity: 1;
     }
@@ -310,6 +320,24 @@ img, a {
     width: 100%;
 }
 
+#trailer {
+    height: 24px;
+    width: 24px;
+    background-color: rgb(45, 45, 45);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    opacity: 0;
+    left: 0px;
+    top: 0px;
+    outline: 2px solid rgb(39, 39, 39);
+    transition: opacity 0.5s ease-in-out;
+}
+
+body:hover > #trailer {
+    opacity: 1;
+}
 
 
 
