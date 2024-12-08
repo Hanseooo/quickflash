@@ -146,7 +146,8 @@ function saveInputs() {
 
 function addCard(card) {
     const newCard = document.createElement('div');
-    newCard.classList.add("flashcard", "p-2", "rounded-4", "d-flex", "flex-column", "justify-content-between", "mx-1")
+    newCard.classList.add("flashcard", "p-2", "rounded-4", "d-flex", "flex-column", "justify-content-between", "mx-2", "interactable")
+    newCard.setAttribute('data-type', 'card')
     const cardBody = document.createElement('div')
     const divider = document.createElement('div')
     divider.classList.add("border-bottom", "divider", "border-dark")
@@ -447,7 +448,9 @@ const lightningImg = document.querySelector('#quickflash-lightning')
 const maxRotationX = 20;
 const maxRotationY = 20; 
 
-document.addEventListener('mousemove', (event) => {
+document.addEventListener('mousemove', heroCardProximityEffect)
+
+function heroCardProximityEffect(event) {
     const { clientX, clientY } = event;
     const { left, top, width, height } = cardImg.getBoundingClientRect();
 
@@ -465,22 +468,33 @@ document.addEventListener('mousemove', (event) => {
 
     // Calculate translation values based on rotation
     const translateX = rotationY * 1; // Adjust the multiplier for desired effect
-    const translateY = rotationX * 1; // Adjust the multiplier for desired effect
+    const translateY = rotationX * 1.2; // Adjust the multiplier for desired effect
 
     const keyframes = {
         transform: `rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateX(${translateX}px) translateY(${translateY}px)`
     };
 
-    // Animate cardImg
-    cardImg.animate(keyframes, {
-        duration: 2000
+    const cardAnimation = cardImg.animate(keyframes, {
+        duration: 2500,
+        fill: 'forwards' // Keep the final state
     });
 
-    // Animate lightningImg with the same keyframes
-    lightningImg.animate(keyframes, {
-        duration: 4000
+    const lightningAnimation = lightningImg.animate(keyframes, {
+        duration: 6000,
+        fill: 'forwards' // Keep the final state
     });
-});
+
+    // When the cardImg animation finishes, reset both images
+    cardAnimation.onfinish = () => {
+        // Reset both images to their original state
+        cardImg.style.transform = ''; // Reset transform
+        lightningImg.style.transform = ''; // Reset lightning image
+        lightningAnimation.cancel(); // Cancel the lightning animation
+        cardAnimation.cancel()
+    };
+}
+
+document.addEventListener('click', heroCardProximityEffect)
 
 
 
@@ -490,9 +504,16 @@ window.onload = () => {
         connectParticles: true,
         maxParticles: 30,
         minDistance: 150,
-        color: '#606060',
+        color: '#505050',
     
         responsive: [
+            {
+                breakpoint: 940,
+                options: {
+                    maxParticles: 27,
+                    minDistance: 150,
+                }
+            },
             {
                 breakpoint: 768,
                 options: {
@@ -514,8 +535,9 @@ window.onload = () => {
                     minDistance: 100,
                 }
              }
-        ]
+        ],
       });
+      
 };
 
 window.onresize = () => {  
@@ -527,6 +549,7 @@ window.onresize = () => {
         element.style.height = H + 'px'; 
     })
  }
+ 
 
  const entryset = document.querySelectorAll('.entryset');
  const observer = new IntersectionObserver(entries => {
@@ -549,6 +572,95 @@ entryset.forEach(element => {
     observer.observe(element);
 })
 
+const trailer = document.querySelector('#trailer');
+const trailerIcon = document.querySelector('#trailer-icon');
+const body = document.querySelector('body')
+
+const animateTrailer = (e, isInteracting) => {
+    const x = e.clientX - trailer.offsetWidth / 2,
+    y = e.clientY - trailer.offsetHeight / 2
+
+    const keyframes = {
+        transform: `translate(${x}px, ${y}px) scale(${isInteracting ? 5 : 1})`
+    }
+
+    trailer.animate(keyframes, {
+        duration: 750,
+        fill: 'forwards',
+    })
+
+}
+
+window.onmousemove = (e) => {
+    if (window.matchMedia('(pointer: fine)').matches) {
+        const interactable = e.target.closest(".interactable"),
+        isInteracting = interactable !== null
+        animateTrailer(e, isInteracting)
+        if (isInteracting) {
+            setTrailerIcon(interactable.dataset.type, isInteracting)
+        }
+        else {
+            setTrailerIcon('default', false)
+        }
+    }
+    else {
+        trailer.style.display = 'none'
+    }
+
+
+}
+
+function setTrailerIcon(type, isInteracting) {
+    console.log(type)
+    switch(type) {
+        case 'link': 
+        case 'button':
+            trailer.style.backgroundColor = "transparent";
+            trailerIcon.textContent = ''
+            break;
+        case 'nav-link':
+            trailer.style.backgroundColor = "transparent";
+            trailerIcon.textContent = ''
+            trailer.style.outline = "2px solid white"
+            break;
+        case 'checkbox':
+            trailer.style.backgroundColor = "transparent";
+            trailerIcon.textContent = 'highlight_mouse_cursor'
+            trailerIcon.classList.add('text-dark')
+            body.classList.add('hide-cursor')
+            break;
+        case 'card':
+            trailer.style.backgroundColor = "transparent";
+            trailerIcon.textContent = 'highlight_mouse_cursor'
+            trailer.style.outline = "none"
+            trailerIcon.classList.add('text-dark')
+            document.body.style.cursor = 'none';
+            break;
+        case 'hero-card':
+            trailerIcon.textContent = 'sentiment_very_satisfied'
+            trailerIcon.classList.remove('text-dark')
+            document.body.style.cursor = 'none';
+            break;
+        case 'hero-card-container':
+            trailerIcon.textContent = 'sentiment_content'
+            trailerIcon.classList.remove('text-dark')
+            document.body.style.cursor = 'none';
+            break;
+        case 'input':
+            trailerIcon.textContent = 'edit'
+            trailer.style.outline = "none"
+            trailer.style.backgroundColor = "transparent";
+            trailerIcon.classList.add('text-dark')
+            document.body.style.cursor = 'none';
+            break;
+        default:
+            trailerIcon.textContent = 'donut_large'
+            trailer.style.backgroundColor = "#393939";
+            trailerIcon.classList.remove('text-dark')
+            trailer.style.outline = "1.5px solid #393939"
+            document.body.style.cursor = 'default';
+    }
+}
 
 
 
