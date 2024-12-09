@@ -21,7 +21,7 @@ img, a {
 
 
 
-#home {
+#home, #about {
     background-image: url('images/bg3.png');
 
 }
@@ -59,7 +59,7 @@ img, a {
     background-image: url('images/bg3.png');
 }
 
-#home, #play_cards, #cards, #instructions_container {
+#home, #play_cards, #cards, #instructions_container, #about {
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -183,6 +183,12 @@ img, a {
     user-select: none; 
 }
 
+#about img {
+    width: 30vw;
+    min-width: 250px;
+    max-width: 350px;
+}
+
 #loading_text {
     stroke: rgb(20, 20, 20);
     fill: transparent;
@@ -200,7 +206,13 @@ img, a {
 .show-element {
     opacity: 1 !important;
     transition: opacity 0.75s ease-in-out;
-    /* animation: 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)  backwards flip_y2; */
+    animation: 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)  backwards zoom_out;
+}
+.show-element img{
+    animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards flip_y2;
+}
+.show-element p, .show-element button{
+   transition-delay: 0.5s;
 }
 .show-element:nth-child(2) {
     animation-delay: 0.2s;
