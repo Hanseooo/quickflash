@@ -467,8 +467,8 @@ function heroCardProximityEffect(event) {
     rotationY = Math.max(-maxRotationY, Math.min(maxRotationY, rotationY));
 
     // Calculate translation values based on rotation
-    const translateX = rotationY * 1; // Adjust the multiplier for desired effect
-    const translateY = rotationX * 1.2; // Adjust the multiplier for desired effect
+    const translateX = rotationY * 1.2; // Adjust the multiplier for desired effect
+    const translateY = rotationX * 1.25; // Adjust the multiplier for desired effect
 
     const keyframes = {
         transform: `rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateX(${translateX}px) translateY(${translateY}px)`
