@@ -640,11 +640,13 @@ function setTrailerIcon(type, isInteracting) {
             trailerIcon.textContent = 'sentiment_very_satisfied'
             trailerIcon.classList.remove('text-dark')
             document.body.style.cursor = 'none';
+            trailer.style.backgroundColor = "#393939";
             break;
         case 'hero-card-container':
             trailerIcon.textContent = 'sentiment_content'
             trailerIcon.classList.remove('text-dark')
             document.body.style.cursor = 'none';
+            trailer.style.backgroundColor = "#393939";
             break;
         case 'input':
             trailerIcon.textContent = 'edit'
