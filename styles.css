@@ -221,13 +221,6 @@ img, a {
     cursor: none;
 }
 
-/* button.show-element:hover {
-    background-color: rgba(232, 232, 232, 0.84) !important;
-    color: rgb(19, 19, 19) !important;
-    outline: 2px solid black !important;;
-} */
-
-
 
 @keyframes fade_in {
     0% {
