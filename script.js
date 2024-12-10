@@ -180,7 +180,6 @@ function addCard(card) {
     }
 }
 
-
 playBtn.addEventListener('click', () => {
     if (cardStorage.length != 0) {
         playCard()
@@ -192,10 +191,7 @@ playBtn.addEventListener('click', () => {
         displayModal(smallModal)
     }
     
-    
 })
-
-
 
 function displayToggle(isPlay) {
     if (isPlay) {
@@ -269,7 +265,6 @@ async function playCard() {
             minutes = 0
         } 
 
-
         displayTimer.textContent = zeroPadding(hours) + ":" + zeroPadding(minutes) + ":" + zeroPadding(seconds)
     }, 1000)
 
@@ -289,7 +284,6 @@ async function playCard() {
         await stopTimer()
     }
     
-
     stopBtn.addEventListener('click', async () => {
         await stopTimer()
         if (isReplay) {
@@ -311,9 +305,6 @@ async function playCard() {
         return number
     }
     
-
-
-
     exitBtn.addEventListener('click', () => {
         displayToggle(false)
         stopTimer()
@@ -328,8 +319,6 @@ async function playCard() {
         instructionContainer.classList.remove('d-flex')
         displayTimer.textContent = zeroPadding(0) + ":" + zeroPadding(0) + ":" + zeroPadding(0)
     }
-
-    
 }
 
 
@@ -382,10 +371,7 @@ async function mainGame() {
                 resolve()
                 return
             })
-            
-            
         }
-
         quizGame()
         itemInterval = setInterval(quizGame, 10000)
     })
@@ -403,7 +389,6 @@ async function mainGame() {
         if (userAnswer === correctAnswer) {
             userScore++
         }
-
     }
 
     async function nextFlashCard(callback, cardIndex) {
@@ -428,14 +413,11 @@ async function mainGame() {
                     randomNumArray.push(randomNum)
                     count++
                 }
-
             } 
         } while(count != cardStorage.length)
 
         return randomNumArray
-    
     }
-
 }
 
 function addAnimation(element, animationClass) {
@@ -466,9 +448,8 @@ function heroCardProximityEffect(event) {
     rotationX = Math.max(-maxRotationX, Math.min(maxRotationX, rotationX));
     rotationY = Math.max(-maxRotationY, Math.min(maxRotationY, rotationY));
 
-    // Calculate translation values based on rotation
-    const translateX = rotationY * 1.2; // Adjust the multiplier for desired effect
-    const translateY = rotationX * 1.25; // Adjust the multiplier for desired effect
+    const translateX = rotationY * 1.2; 
+    const translateY = rotationX * 1.25; 
 
     const keyframes = {
         transform: `rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateX(${translateX}px) translateY(${translateY}px)`
@@ -476,20 +457,18 @@ function heroCardProximityEffect(event) {
 
     const cardAnimation = cardImg.animate(keyframes, {
         duration: 2500,
-        fill: 'forwards' // Keep the final state
+        fill: 'forwards' 
     });
 
     const lightningAnimation = lightningImg.animate(keyframes, {
         duration: 6000,
-        fill: 'forwards' // Keep the final state
+        fill: 'forwards' 
     });
 
-    // When the cardImg animation finishes, reset both images
     cardAnimation.onfinish = () => {
-        // Reset both images to their original state
-        cardImg.style.transform = ''; // Reset transform
-        lightningImg.style.transform = ''; // Reset lightning image
-        lightningAnimation.cancel(); // Cancel the lightning animation
+        cardImg.style.transform = ''; 
+        lightningImg.style.transform = '';
+        lightningAnimation.cancel();
         cardAnimation.cancel()
     };
 }
@@ -588,7 +567,6 @@ const animateTrailer = (e, isInteracting) => {
         duration: 750,
         fill: 'forwards',
     })
-
 }
 
 window.onmousemove = (e) => {
@@ -606,8 +584,6 @@ window.onmousemove = (e) => {
     else {
         trailer.style.display = 'none'
     }
-
-
 }
 
 function setTrailerIcon(type, isInteracting) {
@@ -663,6 +639,3 @@ function setTrailerIcon(type, isInteracting) {
             document.body.style.cursor = 'default';
     }
 }
-
-
-
