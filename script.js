@@ -544,7 +544,7 @@ window.onresize = () => {
 )
  },
  {
-    threshold: 0.75,
+    threshold: 0.5,
     rootMargin: -5 + 'px',
  })
 entryset.forEach(element => {
